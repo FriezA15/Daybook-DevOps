@@ -134,11 +134,9 @@ jobs:
       - name: Deploy frontend to Render
         env:
           RENDER_HOOK: ${{ secrets.RENDER_FRONTEND_HOOK }}
-          IMG: docker.io/${{ secrets.DOCKER_USERNAME }}/daybook-frontend:${{ github.sha }}
         run: |
-          curl -fsSLG "$RENDER_HOOK" \
-          --data-urlencode "imgURL=$IMG"
-
+          curl -X POST "$RENDER_HOOK"
+          
       # 1️⃣3️⃣ Update K8s manifests with new image tags
       - name: Update Kubernetes Manifests
         run: |
